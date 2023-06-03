@@ -43,12 +43,11 @@ PINECONE_INDEX_NAME=
 
 ```
 
-- Visit [openai](https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key) to retrieve API keys and insert into your `.env` file.
-- Visit [pinecone](https://pinecone.io/) to create and retrieve your API keys, and also retrieve your environment and index name from the dashboard.
+- 访问 OpenAI 获取 API 密钥并插入到您的 `.env` 文件中。
+- 访问 Pinecone 创建和检索 API 密钥，并从仪表板中检索您的环境和索引名称。
+在 `config` 文件夹中，将 P`INECONE_NAME_SPACE` 替换为您想要在 Pinecone 上存储嵌入式向量的命名空间，当您运行 `npm run ingest` 时。稍后将使用此命名空间进行查询和检索。
 
-4. In the `config` folder, replace the `PINECONE_NAME_SPACE` with a `namespace` where you'd like to store your embeddings on Pinecone when you run `npm run ingest`. This namespace will later be used for queries and retrieval.
-
-5. In `utils/makechain.ts` chain change the `QA_PROMPT` for your own usecase. Change `modelName` in `new OpenAI` to `gpt-4`, if you have access to `gpt-4` api. Please verify outside this repo that you have access to `gpt-4` api, otherwise the application will not work.
+在 `utils/makechain.ts` 中更改 `QA_PROMPT` 以适应您自己的用例。如果您有访问 `gpt-4 api`，请将 new OpenAI 中的 `modelName` 更改为 gpt-4。请在本仓库之外验证您是否有访问 `gpt-4` api，否则该应用程序将无法工作。
 
 ## 将您的PDF文件转换为嵌入向量
 ### 此存储库可以加载多个 PDF 文件

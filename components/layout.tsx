@@ -9,8 +9,9 @@ export default function Layout({ children }: LayoutProps) {
         <div className="h-16 border-b border-b-slate-200 py-4">
           <nav className="ml-4 pl-6">
             <a href="#" className="hover:text-slate-600 cursor-pointer">
-              Home
+              首页
             </a>
+         
           </nav>
         </div>
       </header>
