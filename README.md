@@ -1,15 +1,7 @@
 # 基于PDF文件构建GPT机器人
 使用新的 GPT-4 API 构建一个 ChatGPT 聊天机器人，用于多个大型 PDF 文件。所使用的技术栈包括 LangChain、Pinecone、TypeScript、OpenAI 和 Next.js。LangChain 是一个框架，可以更轻松地构建可扩展的 AI/LLM 应用程序和聊天机器人。Pinecone 是一个用于存储嵌入向量和将 PDF 转换为文本以便后续检索相似文档的矢量存储库。
 
-[教程视频](https://www.youtube.com/watch?v=ih9PBGVVOO4)
-
-[如果您有问题，请加入 Discord](https://discord.gg/E4Mc77qwjm)
-
-此存储库和教程的视觉指南位于“visual guide”文件夹中。
-
-**如果遇到错误，请查看本页下面的故障排除部分。**
-
-前奏：请确保您已经在系统上下载了 Node，并且版本是 18 或更高。
+> 请确保您已经在系统上下载了 Node，并且版本是 18 或更高。
 
 ## 开发
 
@@ -35,17 +27,14 @@ yarn install
 
 ```
 OPENAI_API_KEY=
-
 PINECONE_API_KEY=
 PINECONE_ENVIRONMENT=
-
 PINECONE_INDEX_NAME=
-
 ```
 
 - 访问 OpenAI 获取 API 密钥并插入到您的 `.env` 文件中。
 - 访问 Pinecone 创建和检索 API 密钥，并从仪表板中检索您的环境和索引名称。
-在 `config` 文件夹中，将 P`INECONE_NAME_SPACE` 替换为您想要在 Pinecone 上存储嵌入式向量的命名空间，当您运行 `npm run ingest` 时。稍后将使用此命名空间进行查询和检索。
+在 `config` 文件夹中，将 `PINECONE_NAME_SPACE` 替换为您想要在 Pinecone 上存储嵌入式向量的命名空间，当您运行 `npm run ingest` 时。稍后将使用此命名空间进行查询和检索。
 
 在 `utils/makechain.ts` 中更改 `QA_PROMPT` 以适应您自己的用例。如果您有访问 `gpt-4 api`，请将 new OpenAI 中的 `modelName` 更改为 gpt-4。请在本仓库之外验证您是否有访问 `gpt-4` api，否则该应用程序将无法工作。
 
@@ -53,11 +42,10 @@ PINECONE_INDEX_NAME=
 ### 此存储库可以加载多个 PDF 文件
 
 在 docs 文件夹中添加您的 PDF 文件或包含 PDF 文件的文件夹。
-运行脚本 npm run ingest 来“摄取”并嵌入您的文档。如果遇到错误，请按照以下步骤进行故障排除。
-检查 Pinecone 仪表板以验证您的命名空间和向量是否已添加。
+运行脚本 `npm run ingest` 对您的PDF文件进行向量化存储。
 
 ## 运行应用程序
-一旦您确认嵌入向量和内容已成功添加到 Pinecone，您可以运行应用程序 npm run dev 来启动本地开发环境，然后在聊天界面中输入问题。
+一旦您确认嵌入向量和内容已成功添加到 Pinecone，您可以运行应用程序 `npm run dev` 来启动本地开发环境，然后在聊天界面中输入问题。
 
 **常见错误**
 
