@@ -1,43 +1,37 @@
-# GPT-4 & LangChain - Create a ChatGPT Chatbot for Your PDF Files
+# 基于PDF文件构建GPT机器人
+使用新的 GPT-4 API 构建一个 ChatGPT 聊天机器人，用于多个大型 PDF 文件。所使用的技术栈包括 LangChain、Pinecone、TypeScript、OpenAI 和 Next.js。LangChain 是一个框架，可以更轻松地构建可扩展的 AI/LLM 应用程序和聊天机器人。Pinecone 是一个用于存储嵌入向量和将 PDF 转换为文本以便后续检索相似文档的矢量存储库。
 
-Use the new GPT-4 api to build a chatGPT chatbot for multiple Large PDF files.
+[教程视频](https://www.youtube.com/watch?v=ih9PBGVVOO4)
 
-Tech stack used includes LangChain, Pinecone, Typescript, Openai, and Next.js. LangChain is a framework that makes it easier to build scalable AI/LLM apps and chatbots. Pinecone is a vectorstore for storing embeddings and your PDF in text to later retrieve similar docs.
+[如果您有问题，请加入 Discord](https://discord.gg/E4Mc77qwjm)
 
-[Tutorial video](https://www.youtube.com/watch?v=ih9PBGVVOO4)
+此存储库和教程的视觉指南位于“visual guide”文件夹中。
 
-[Join the discord if you have questions](https://discord.gg/E4Mc77qwjm)
+**如果遇到错误，请查看本页下面的故障排除部分。**
 
-The visual guide of this repo and tutorial is in the `visual guide` folder.
+前奏：请确保您已经在系统上下载了 Node，并且版本是 18 或更高。
 
-**If you run into errors, please review the troubleshooting section further down this page.**
+## 开发
 
-Prelude: Please make sure you have already downloaded node on your system and the version is 18 or greater.
-
-## Development
-
-1. Clone the repo or download the ZIP
+1. 克隆存储库或下载 ZIP
 
 ```
 git clone [github https url]
 ```
 
-2. Install packages
+2. 安装包
 
-First run `npm install yarn -g` to install yarn globally (if you haven't already).
+首先运行 `npm install yarn -g` 以全局安装 Yarn（如果尚未安装）。
 
-Then run:
+然后运行：
 
 ```
 yarn install
 ```
 
-After installation, you should now see a `node_modules` folder.
+3. 设置 `.env` 文件
 
-3. Set up your `.env` file
-
-- Copy `.env.example` into `.env`
-  Your `.env` file should look like this:
+- 创建`.env` 文件
 
 ```
 OPENAI_API_KEY=
@@ -56,44 +50,32 @@ PINECONE_INDEX_NAME=
 
 5. In `utils/makechain.ts` chain change the `QA_PROMPT` for your own usecase. Change `modelName` in `new OpenAI` to `gpt-4`, if you have access to `gpt-4` api. Please verify outside this repo that you have access to `gpt-4` api, otherwise the application will not work.
 
-## Convert your PDF files to embeddings
+## 将您的PDF文件转换为嵌入向量
+### 此存储库可以加载多个 PDF 文件
 
-**This repo can load multiple PDF files**
+在 docs 文件夹中添加您的 PDF 文件或包含 PDF 文件的文件夹。
+运行脚本 npm run ingest 来“摄取”并嵌入您的文档。如果遇到错误，请按照以下步骤进行故障排除。
+检查 Pinecone 仪表板以验证您的命名空间和向量是否已添加。
 
-1. Inside `docs` folder, add your pdf files or folders that contain pdf files.
+## 运行应用程序
+一旦您确认嵌入向量和内容已成功添加到 Pinecone，您可以运行应用程序 npm run dev 来启动本地开发环境，然后在聊天界面中输入问题。
 
-2. Run the script `npm run ingest` to 'ingest' and embed your docs. If you run into errors troubleshoot below.
+**常见错误**
 
-3. Check Pinecone dashboard to verify your namespace and vectors have been added.
-
-## Run the app
-
-Once you've verified that the embeddings and content have been successfully added to your Pinecone, you can run the app `npm run dev` to launch the local dev environment, and then type a question in the chat interface.
-
-## Troubleshooting
-
-In general, keep an eye out in the `issues` and `discussions` section of this repo for solutions.
-
-**General errors**
-
-- Make sure you're running the latest Node version. Run `node -v`
-- Try a different PDF or convert your PDF to text first. It's possible your PDF is corrupted, scanned, or requires OCR to convert to text.
-- `Console.log` the `env` variables and make sure they are exposed.
-- Make sure you're using the same versions of LangChain and Pinecone as this repo.
-- Check that you've created an `.env` file that contains your valid (and working) API keys, environment and index name.
-- If you change `modelName` in `OpenAI`, make sure you have access to the api for the appropriate model.
-- Make sure you have enough OpenAI credits and a valid card on your billings account.
-- Check that you don't have multiple OPENAPI keys in your global environment. If you do, the local `env` file from the project will be overwritten by systems `env` variable.
-- Try to hard code your API keys into the `process.env` variables if there are still issues.
+- 确保您正在运行最新的 Node 版本。运行 `node -v` 命令。
+- 尝试使用不同的 PDF 文件或将您的 PDF 文件先转换为文本格式。有可能您的 PDF 文件已损坏、是扫描版或需要 OCR 转换为文本格式。
+- 使用 `console.log` 打印出 `env` 变量，并确保它们被公开。
+- 确保您正在使用与此存储库相同版本的 LangChain 和 Pinecone。
+- 检查是否已创建包含有效（且可用）API 密钥、环境和索引名称的 `.env` 文件。
+- 如果您在 `OpenAI` 中更改了 `modelName`，请确保您已经获取了适当模型的 API 权限。
+- 确保您拥有足够的 OpenAI 学分和一个有效的账单支付方式。
+- 检查您的全局环境中是否有多个 OPENAPI 密钥。如果有，则项目中的本地 `env` 文件将被系统的 `env` 变量覆盖。
+- 如果仍然存在问题，请尝试将您的 API 密钥硬编码到 `process.env` 变量中。
 
 **Pinecone errors**
 
-- Make sure your pinecone dashboard `environment` and `index` matches the one in the `pinecone.ts` and `.env` files.
-- Check that you've set the vector dimensions to `1536`.
-- Make sure your pinecone namespace is in lowercase.
-- Pinecone indexes of users on the Starter(free) plan are deleted after 7 days of inactivity. To prevent this, send an API request to Pinecone to reset the counter before 7 days.
-- Retry from scratch with a new Pinecone project, index, and cloned repo.
-
-## Credit
-
-Frontend of this repo is inspired by [langchain-chat-nextjs](https://github.com/zahidkhawaja/langchain-chat-nextjs)
+- 确保您的 Pinecone 仪表板 `environment` 和 `index` 与 `pinecone.ts` 和 `.env` 文件中的匹配。
+- 检查您是否将向量维度设置为 `1536`。
+- 确保您的 Pinecone 命名空间为小写。
+- 在 Starter（免费）计划中，用户的 Pinecone 索引会在 7 天不活动后被删除。要防止这种情况，请在 7 天之前向 Pinecone 发送 API 请求以重置计数器。
+- 使用新的 Pinecone 项目、索引和克隆的存储库从头开始重试。
